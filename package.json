@@ -10,7 +10,9 @@
     "create-barrage-token": "node scripts/createBT",
     "create-usdc-token": "node scripts/createUSDC",
     "deploy-contract": "node scripts/deploy",
-    "grant-admin-role": "node scripts/grantAdminRole"
+    "grant-admin-role": "node scripts/grantAdminRole",
+    "transfer-bt": "node scripts/transferBT",
+    "transfer-usdc": "node scripts/transferUSDC"
   },
   "dependencies": {
     "@esbuild-plugins/node-globals-polyfill": "^0.2.3",

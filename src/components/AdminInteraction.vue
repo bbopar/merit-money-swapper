@@ -1,8 +1,8 @@
 <script setup>
 import { ref } from "vue";
-import { useHashConnectWallet } from '../store'
+import { useHashConnectWallet } from '@/store/HashConnectStore'
 
-let ftID = ref("");
+let tokenToBeAssociated = ref("");
 let tokenToBeApproved = ref("");
 let allowanceAmount = ref("");
 let whitelistAccountId = ref("");
@@ -15,7 +15,7 @@ async function handleApproveSpender() {
 }
 
 async function associateSwapperWithToken() {
-  await hcWallet.associateSwapperWithToken(ftID.value);
+  await hcWallet.associateSwapperWithToken(tokenToBeAssociated.value);
 }
 
 async function handleWhitelist() {

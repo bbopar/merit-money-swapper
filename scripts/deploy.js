@@ -1,9 +1,14 @@
 const hre = require("hardhat");
+require('dotenv').config();
+const { TokenId } = require('@hashgraph/sdk');
 
 async function main() {
+  const USDC_ADDRESS = TokenId.fromString(process.env.USDC_TOKEN_ID).toSolidityAddress();
+  const BT_ADDRESS = TokenId.fromString(process.env.BARRAGE_TOKEN_ID).toSolidityAddress();
+
   const BarrageTokenSwap = await hre.ethers.getContractFactory("Swapper");
   const barrageTokenSwap = await BarrageTokenSwap
-    .deploy(process.env.USDC_ADDRESS, process.env.BARRAGE_ADDRESS);
+    .deploy(USDC_ADDRESS, BT_ADDRESS);
 
   const contractAddress = (await barrageTokenSwap.deployTransaction.wait()).contractAddress;
 

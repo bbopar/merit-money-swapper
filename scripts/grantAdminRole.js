@@ -7,14 +7,15 @@ const {
 } = require("@hashgraph/sdk");
 require('dotenv').config();
 
-
-const deployerAccountId = process.env.TREASURY_ACCOUNT_ID;
-const deployerPrivKey = PrivateKey.fromString(process.env.TREASURY_DER_PRIVATE_KEY);
+const deployerAccountId = process.env.DEPLOYER_ACCOUNT_ID;
+const deployerPrivKey = PrivateKey.fromString(process.env.DEPLOYER_DER_PRIVATE_KEY);
 
 const client = Client.forTestnet();
 client.setOperator(deployerAccountId, deployerPrivKey);
 
 const newAdminAddr = AccountId.fromString(process.env.COMPANY_ADMIN_ID).toSolidityAddress();
+
+console.log('🚀 ~ file: grantAdminRole.js:18 ~ newAdminAddr:', newAdminAddr);
 
 async function main() {
   const trx = await new ContractExecuteTransaction()

@@ -44,13 +44,13 @@ import { abi } from '../artifacts/contracts/Swapper.sol/Swapper.json';
 
 ## Account & Token setup
 
-1. Create `Deployer` account [here](https://portal.hedera.com/).
+1. Create `Deployer` account [here](https://portal.hedera.com/). ECDSA.
 
 2. Add deployer keys to .env file.
 
-3. Create `Admin` account using hashpack wallet and fund with hbar using `Deployer`.
+3. Create `Admin` account using hashpack wallet and fund with `USDC` using `Deployer`.
 
-4. Create `Employee` account using hashpack wallet and fund with hbar using `Deployer`.
+4. Create `Employee` account using hashpack wallet and fund with `BT` using `Deployer`.
 
 5. Create both tokens on `testnet` with `Deployer` account.
 
@@ -86,7 +86,17 @@ Find contract addresses for both tokens [here](https://hashscan.io/testnet) and 
 
 For the association you'll need to login into hashpask wallet for `admin` and `employee` and associate those accounts with new tokens.
 
-7. Contract deployment
+7. Transfer BT to `Employee` & USDC to `Admin`
+
+```
+npm run transfer-bt
+
+npm run transfer-usdc
+```
+
+In this scripts you can adjust amounts, sender & receiver based on your needs for testing.
+
+8. Contract deployment
 
 ### Hardhat config
 
@@ -114,6 +124,10 @@ Swapper contract address: 0x81c2e51a55f21b0246754C4e11C749F0f2C8d443
 The recommendation is to off-load the deployment to backend service. The reason is that you can't deploy such large contract with hashpack wallet.
 
 Because of that suggestion is to read `privKey` from `vault` or `.env` file and then deploy the contract using backend service.
+
+Look up for `tokenId` from deployed `Swapper` [here](https://hashscan.io/testnet) and add to .env file.
+
+You've should also add `tokenId` to `HashConnectStore`.
 
 ## State changes necessary for COMPANY_ADMIN to deposit:
 

@@ -1,11 +1,26 @@
 <script setup>
-import { useHashConnectWallet } from '../store'
+import router from '@/router';
+import { useHashConnectWallet } from '@/store/HashConnectStore'
+import { watch } from 'vue';
 
 const hcWallet = useHashConnectWallet();
+
+// if have localStorage connect to hashconnect =~ router.push('/admin')
 
 async function handleWalletConnection() {
   await hcWallet.connectWallet();
 }
+// async function handleWalletDisconnect() {
+//   await hcWallet.disconnectWallet();
+// }
+
+watch(() => hcWallet.accountId, (val) =>{
+  console.log('WATCH HERE');
+  console.log('WATCH HERE', val);
+  if(val) {
+    router.push('/admin')
+  }
+})
 
 </script>
 
@@ -54,6 +69,27 @@ async function handleWalletConnection() {
             Connect with Hashpack
           </v-btn>
         </v-col>
+
+        <!-- <v-col cols="auto" v-else>
+          <v-btn
+            color="primary"
+            @click=handleWalletDisconnect
+            min-width="228"
+            rel="noopener noreferrer"
+            size="x-large"
+            target="_blank"
+            variant="flat"
+          >
+            <v-icon
+              icon="mdi-speedometer"
+              size="large"
+              start
+            />
+
+            Disconnect with Hashpack
+          </v-btn>
+        </v-col> -->
+
 
         <v-col cols="auto">
           <v-btn

@@ -1,6 +1,6 @@
 <script setup>
 import { ref } from "vue";
-import { useHashConnectWallet } from '../store'
+import { useHashConnectWallet } from '@/store/HashConnectStore'
 
 let balance = ref("");
 

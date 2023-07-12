@@ -10,6 +10,7 @@ client.setOperator(treasuryAccountID, treasuryPrivateKey);
 async function main() {
   const amount = 1500;
 
+  // const receiver = process.env.COMPANY_ADMIN_ID;
   const receiver = process.env.EMPLOYEE_ID;
 
   const transferTx = new TransferTransaction()

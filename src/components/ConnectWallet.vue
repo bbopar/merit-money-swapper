@@ -50,7 +50,7 @@ watch(() => hcWallet.accountId, (val) =>{
           </v-btn>
         </v-col>
 
-        <v-col cols="auto">
+        <v-col cols="auto" v-if="!hcWallet.saveData.pairingString">
           <v-btn
             color="primary"
             @click=handleWalletConnection
@@ -70,7 +70,7 @@ watch(() => hcWallet.accountId, (val) =>{
           </v-btn>
         </v-col>
 
-        <!-- <v-col cols="auto" v-else>
+        <v-col cols="auto" v-else>
           <v-btn
             color="primary"
             @click=handleWalletDisconnect
@@ -88,7 +88,7 @@ watch(() => hcWallet.accountId, (val) =>{
 
             Disconnect with Hashpack
           </v-btn>
-        </v-col> -->
+        </v-col>
 
 
         <v-col cols="auto">

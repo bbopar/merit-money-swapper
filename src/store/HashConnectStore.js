@@ -44,18 +44,18 @@ export const useHashConnectWallet = defineStore("hashConnectWallet", () => {
     return hashConnect.value.connectToLocalWallet(saveData.value.pairingString);
   }
 
-  // async function disconnectWallet() {
-  //   if (!hashConnect.value) {
-  //     return;
-  //   }
-  //   await hashConnect.value.disconnect(saveData.value.topic);
-  //   hashConnect.value = null;
-  //   signer.value = null;
-  //   saveData.value = null;
-  //   if(localStorage.getItem('hashconnectData')){
-  //     localStorage.removeItem('hashconnectData');
-  //   }
-  // }
+  async function disconnectWallet() {
+    if (!hashConnect.value) {
+      return;
+    }
+    await hashConnect.value.disconnect(saveData.value.topic);
+    hashConnect.value = null;
+    signer.value = null;
+    saveData.value = null;
+    if(localStorage.getItem('hashconnectData')){
+      localStorage.removeItem('hashconnectData');
+    }
+  }
 
 
   async function setUpHashConnectEvents() {
@@ -124,7 +124,7 @@ export const useHashConnectWallet = defineStore("hashConnectWallet", () => {
     let transactionBytes = trans.toBytes();
 
     const res = await HashConnectProxy
-      .sendTrx(hashConnect.value, saveData.value.topic, transactionBytes, accountId);
+      .sendTrx(hashConnect.value, saveData.value.topic, transactionBytes, accountId.value);
 
     const receipt = await ResponseDecoder.decode(fnName, res.receipt);
 
@@ -147,7 +147,7 @@ export const useHashConnectWallet = defineStore("hashConnectWallet", () => {
       .setFunction(fnName, new ContractFunctionParameters().addAddress(tokenAddr))
       .setMaxTransactionFee(new Hbar(10));
 
-    console.log('#1', trans, accountId);
+    console.log('#1', trans, accountId.value);
 
     let transactionBytes = await SingingService.makeBytes(trans, accountId.value);
 
@@ -181,10 +181,10 @@ export const useHashConnectWallet = defineStore("hashConnectWallet", () => {
       .setFunction(fnName)
       .setMaxTransactionFee(new Hbar(10));
 
-    let transactionBytes = await SingingService.makeBytes(trans, accountId);
+    let transactionBytes = await SingingService.makeBytes(trans, accountId.value);
 
     const res = await HashConnectProxy
-      .sendTrx(hashConnect.value, saveData.value.topic, transactionBytes, accountId);
+      .sendTrx(hashConnect.value, saveData.value.topic, transactionBytes, accountId.value);
 
     console.log('🚀 ~ file: index.js:201 ~ swap ~ res:', res);
 
@@ -211,10 +211,10 @@ export const useHashConnectWallet = defineStore("hashConnectWallet", () => {
       .setFunction(fnName, new ContractFunctionParameters().addAddress(employeeAddr))
       .setMaxTransactionFee(new Hbar(10));
 
-    let transactionBytes = await SingingService.makeBytes(trans, accountId);
+    let transactionBytes = await SingingService.makeBytes(trans, accountId.value);
 
     const res = await HashConnectProxy
-      .sendTrx(hashConnect.value, saveData.value.topic, transactionBytes, accountId);
+      .sendTrx(hashConnect.value, saveData.value.topic, transactionBytes, accountId.value);
 
     if (res.error) {
       console.log('🚀 ~ file: index.js:246 ~ whitelist ~ res.error:', res.error);
@@ -230,12 +230,12 @@ export const useHashConnectWallet = defineStore("hashConnectWallet", () => {
 
   async function approveSpender(tokenId, amount) {
     let trans = new AccountAllowanceApproveTransaction()
-      .approveTokenAllowance(tokenId, accountId, contractId, amount);
+      .approveTokenAllowance(tokenId, accountId.value, contractId, amount);
 
-    let transactionBytes = await SingingService.makeBytes(trans, accountId);
+    let transactionBytes = await SingingService.makeBytes(trans, accountId.value);
 
     const res = await HashConnectProxy
-      .sendTrx(hashConnect.value, saveData.value.topic, transactionBytes, accountId);
+      .sendTrx(hashConnect.value, saveData.value.topic, transactionBytes, accountId.value);
 
     console.log('🚀 Approve spender response:', res);
 
@@ -253,7 +253,7 @@ export const useHashConnectWallet = defineStore("hashConnectWallet", () => {
     let transactionBytes = trans.toBytes();
 
     const res = await HashConnectProxy
-      .sendTrx(hashConnect.value, saveData.value.topic, transactionBytes, accountId);
+      .sendTrx(hashConnect.value, saveData.value.topic, transactionBytes, accountId.value);
 
     const receipt = await ResponseDecoder.decode(fnName, res.receipt);
 
@@ -271,7 +271,7 @@ export const useHashConnectWallet = defineStore("hashConnectWallet", () => {
     approveSpender,
     associateSwapperWithToken,
     connectWallet,
-    // disconnectWallet,
+    disconnectWallet,
     deposit,
     getAmountForWithdraw,
     getBalanceUSDC,
